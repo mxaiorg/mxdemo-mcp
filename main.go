@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"flag"
 	"fmt"
 	"github.com/mark3labs/mcp-go/mcp"
 	"github.com/mark3labs/mcp-go/server"
@@ -14,6 +15,13 @@ import (
 
 func main() {
 	log.SetFlags(log.Lshortfile)
+
+	// Get flags
+	flag.StringVar(&tools.DocgenTmplId, "docgen_template_id", "",
+		"File ID for the DocGen template")
+	flag.StringVar(&tools.DocgenSaveFolderId, "docgen_save_folder_id", "",
+		"Folder ID for the DocGen output folder")
+	flag.Parse()
 
 	// Create a new MCP server
 	s := server.NewMCPServer(

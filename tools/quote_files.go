@@ -1,6 +1,7 @@
 package tools
 
 import (
+	"bytes"
 	"context"
 	"encoding/json"
 	"fmt"
@@ -9,6 +10,12 @@ import (
 	"golang.org/x/text/language"
 	"os"
 	"strconv"
+	"text/template"
+)
+
+var (
+	DocgenTmplId       string
+	DocgenSaveFolderId string
 )
 
 var quoteFileStepInstructs = `Follow these steps to download a quote file:
@@ -16,9 +23,18 @@ var quoteFileStepInstructs = `Follow these steps to download a quote file:
 # Step 1:
 
 Call box_docgen_create_batch_tool with the following parameters:
-
-file_id: 1857108452978
-destination_folder_id: 319777767682
+{{if .FileId}}
+file_id: {{.FileId}}
+{{- else}}
+Work with the user to get the file id of the DocGen template.
+Once identified, use it as the 'file_id' parameter value.
+{{- end}}
+{{if .FolderId}}
+destination_folder_id: {{.FolderId}}
+{{- else}}
+Work with the user to get the folder id of the DocGen output folder.
+Once identified, use it as the 'destination_folder_id' parameter value.
+{{end}}
 user_input_file_path: /tmp/quote.json
 
 With the returned batch id proceed to step 2. 
@@ -100,10 +116,35 @@ func QuoteFileTool(_ context.Context, request mcp.CallToolRequest) (*mcp.CallToo
 		return nil, err
 	}
 
+	// write out json that will be used for DocGen call
 	err = os.WriteFile("/tmp/quote.json", jsonBytes, 0644)
 	if err != nil {
 		return nil, err
 	}
 
-	return mcp.NewToolResultText(quoteFileStepInstructs), nil
+	tmplMap := map[string]string{
+		"FileId":   DocgenTmplId,
+		"FolderId": DocgenSaveFolderId,
+	}
+
+	quoteInstructions, tmplErr := fillQuoteTmpl(quoteFileStepInstructs, tmplMap)
+	if tmplErr != nil {
+		return nil, tmplErr
+	}
+
+	return mcp.NewToolResultText(quoteInstructions), nil
+}
+
+func fillQuoteTmpl(tmpl string, jsonMap map[string]string) (string, error) {
+	t, err := template.New("quote").Parse(tmpl)
+	if err != nil {
+		return "", err
+	}
+
+	var buf bytes.Buffer
+	if execErr := t.Execute(&buf, jsonMap); execErr != nil {
+		return "", execErr
+	}
+
+	return buf.String(), nil
 }
