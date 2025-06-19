@@ -14,9 +14,6 @@ Unlike Python or Javascript MCPs, Go compiles to native static binary. Once comp
 ## Requirements
 
 - GO 1.22 or higher ([download](https://go.dev/doc/install))
-- mxHERO Vector Search credentials (token)
-  - A demo token can be obtained at https://lab4-api.mxhero.com/demo_signup
-  - For production tokens, contact mxHERO.
 
 ## Installation
 1. Clone the repository
