@@ -44,7 +44,7 @@ make mac-arm
 
 After `make` is run it will place the program (binary) in the `bin`folder. Copy this binary to the user's computer and see the configuration instructions below.
 
-For example: `cp bin/mxmcp-mac-arm ~/user`
+For example: `cp bin/mxdemo-mac-arm ~/user`
 
 **Note**
 * Some platforms, like MacOS, will require additional permissions before allowing the program to be run on another machine.
