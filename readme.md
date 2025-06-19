@@ -2,6 +2,15 @@
 
 Assorted mock tools for demo scenarios.
 
+## Compiling
+
+```bash
+make
+cp bin/mxdemo <target folder>
+```
+
+Be sure to note the full path of the target file location. The full path needs to be put in the configuration (see below)  "command" field.
+
 ### Arguments
 
 There are only two optional arguments for this MCP. Both are associated with calling DocGen from the Box MCP.
@@ -26,3 +35,5 @@ When setting these values, be sure that the user credentials of the Box MCP have
   }
 }
 ```
+
+Replace "/usr/local/bin/mxdemo" with the location of your compiled binary.
