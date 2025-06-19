@@ -83,6 +83,7 @@ When setting these values, be sure that the user credentials of the Box MCP have
 
 * docgen_template_id (optional)
   * Set this argument to hardcode the DocGen template fileID.
+  * This should be the file from the `assets` folder (uploaded to DocGen - see note below)
 * docgen_save_folder_id
   * Set this argument to hardcode the DocGen output folder. 
 
