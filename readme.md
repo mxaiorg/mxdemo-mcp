@@ -100,7 +100,7 @@ When setting these values, be sure that the user credentials of the Box MCP have
 
 Replace "/usr/local/bin/mxdemo" with the location of your compiled binary.
 
-### Note about DocGen demo
+### Note about Box DocGen demo
 
 The "create quote" demonstration uses a predefined template with fields the demo MCP will supply values for. You can find a copy of this template in the `assets` folder.
 
